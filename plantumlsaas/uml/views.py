@@ -32,4 +32,4 @@ def get(request):
         raise Http404
     query = request.META['QUERY_STRING']
 
-    return HttpResponse(json.dumps({'str': query}), 'json/application')
+    return HttpResponse(json.dumps({'str': query}), content_type='application/json')
