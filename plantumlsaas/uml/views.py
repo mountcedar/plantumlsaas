@@ -26,7 +26,13 @@ def get(request):
         raise Http404
     query = request.META['QUERY_STRING']
     cmd = 'java -jar /usr/local/lib/plantuml.jar'
-    p = subprocess.Popen(cmd, shell=True, stdin=subprocess.PIPE, tdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    p = subprocess.Popen(
+        cmd,
+        shell=True,
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE
+    )
     p.wait()
     p.stdin.write(query)
     p.communicate()
