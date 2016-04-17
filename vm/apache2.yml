@@ -1,0 +1,14 @@
+# ----- git, make, apache2, etc -----
+- name: apt-get install necessary packages
+  apt: name={{ item }} state=latest
+  with_items:
+    - apache2
+    - libapache2-mod-wsgi
+
+# ----- Apache (SSL configuration) -----
+- name: enable ssl module
+  command: a2enmod ssl
+- name: enable rewrite module
+  command: a2enmod rewrite
+- name: enable proxy module
+  command: a2enmod proxy proxy_http

@@ -42,9 +42,6 @@
     - name: setup django and related packages (rabbitmq, celery)
       include: django.yml
 
-    - name: setup latex
-      include: latex.yml
-
     - name: install hmreport
       include: plantumlsaas.yml
 

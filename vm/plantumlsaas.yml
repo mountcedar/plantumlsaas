@@ -1,3 +1,9 @@
+# ----- get latest plantuml jar file -----
+- name: get latest plantuml
+  get_url:
+    url="http://downloads.sourceforge.net/project/plantuml/plantuml.jar?r=http%3A%2F%2Ftweeeety.hateblo.jp%2Fentry%2F2014%2F10%2F24%2F173359&ts=1460892733&use_mirror=tenet"
+    dest=/usr/local/lib/plantuml.jar
+
 # ----- get project by github svn feature -----
 - name: remove project directory if exist
   shell: rm -rf {{ project_dir }}
