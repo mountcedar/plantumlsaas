@@ -6,6 +6,7 @@
     - libffi-dev
     - python-openssl
     - memcached
+    - default-jre
 
 
 # - name: check if rabbitmq exists
