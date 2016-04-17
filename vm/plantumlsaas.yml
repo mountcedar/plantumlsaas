@@ -1,0 +1,76 @@
+# ----- get project by github svn feature -----
+- name: remove project directory if exist
+  shell: rm -rf {{ project_dir }}
+  when: debug == False
+
+# ----- copy or synchronize the apps project directory -----
+
+- name: synchronize django application
+  synchronize:
+    src=../dist/plantumlsaas
+    dest=/var/www
+    rsync_path="sudo rsync"
+    rsync_opts="--exclude=*.pyc"
+
+- name: change owner of the project directory
+  file: path={{ project_dir }} owner=www-data group=www-data recurse=yes
+
+# ----- Add django wsgi settings -----
+- name: rmdir static directory
+  command: rm -rf /var/www/html/static
+
+- name: mkdir static directory
+  file: path=/var/www/html/static state=directory
+
+- name: collectstatic in hmreport
+  command: python manage.py collectstatic --noinput
+    chdir={{ project_dir }}
+
+# ----- create database file for tekuserver -----
+
+- name: migrate database
+  sudo_user: "www-data"
+  command: python manage.py makemigrations
+    chdir={{ project_dir }}
+
+- name: migrate database
+  sudo_user: "www-data"
+  command: python manage.py migrate
+    chdir={{ project_dir }}
+
+- name: create sqlite3 db for the project
+  sudo_user: "www-data"
+  command: python manage.py migrate --noinput
+    chdir={{ project_dir }}
+
+- name: change ownership of database
+  file: path={{ project_dir }}/db.sqlite3 owner=www-data group=www-data mode=0644
+
+- name: load initial data into database
+  sudo_user: "www-data"
+  command: python manage.py loaddata fixtures/users.json
+    chdir={{ project_dir }}
+
+- name: copy django.conf
+  copy: src=django.conf dest=/etc/apache2/conf-available/django.conf
+
+- name: enable configuration
+  command: a2enconf django
+
+# ----- start / restart django celery worker
+# - name: killall celery worker
+#   shell: killall python
+#   ignore_errors: yes
+#
+# - name: delete pid file for celery
+#   command: rm -f {{ project_dir }}/celeryd.pid
+#
+# - name: start django celery worker
+#   remote_user: "www-data"
+#   sudo_user: "www-data"
+#   shell: nohup python ./manage.py celery worker --detach & chdir={{ project_dir }}
+
+# - name: start django celery beat (django scheduler)
+#   remote_user: "www-data"
+#   sudo_user: "www-data"
+#   shell: nohup python ./manage.py celerybeat & chdir={{ project_dir }}

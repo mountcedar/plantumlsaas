@@ -1,0 +1,53 @@
+- hosts: all
+  sudo: true
+  user: vagrant
+  sudo_user: root
+  vars:
+    project_root: /var/www/
+    project_dir: /var/www/plantumlsaas
+    debug: False
+  tasks:
+    - name: apt-get update
+      apt: update_cache=yes
+      when: debug == False
+
+    - name: apt-get upgrade
+      apt: upgrade=yes
+      when: debug == False
+
+    - name: apt-get dist-upgrade
+      apt: upgrade=dist
+      when: debug == False
+
+    - name: apt-get install necessary packages
+      apt: name={{ item }} state=latest
+      with_items:
+        - git
+        - subversion
+        - build-essential
+        - python-pip
+        - emacs
+        - avahi-daemon
+      when: debug == False
+
+    - name: change hostname
+      command: hostnamectl set-hostname plantuml
+
+    - name: restart avahi-daemon (DDNS service)
+      service: name=avahi-daemon state=restarted
+
+    - name: setup apache
+      include: apache2.yml
+
+    - name: setup django and related packages (rabbitmq, celery)
+      include: django.yml
+
+    - name: setup latex
+      include: latex.yml
+
+    - name: install hmreport
+      include: plantumlsaas.yml
+
+    # ----- restart Apache -----
+    - name: restart apache
+      command: service apache2 restart

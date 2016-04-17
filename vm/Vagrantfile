@@ -1,0 +1,28 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  ##################################################################################
+  ##  VIRTUALBOX SETTINGS
+  ################################################################################
+  config.vm.provider :virtualbox do |provider, override|
+    config.vm.box = "ubuntu14.04"
+    config.vm.network "private_network", ip: "192.168.33.10"
+    # config.vm.network :public_network, bridge: "en1"
+
+    config.vm.provider "virtualbox" do |vb|
+      vb.memory = "2048"
+      vb.cpus = "2"
+    end
+  end
+
+  config.vm.provision "host_shell", inline: "bash ./export.sh"
+  config.vm.provision :shell, :inline => "ulimit -n 4048"
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "./playbook.yaml"
+    # ansible.verbose = 'vvvv'
+  end
+
+end
