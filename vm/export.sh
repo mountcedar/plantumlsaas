@@ -6,6 +6,6 @@ echo "removing dist dir..."
 rm -rf dist
 echo "recreate dist dir..."
 mkdir dist
-echo "archive hmreport"
-git archive --format=tar HEAD hmreport | tar -C dist -xf -
+echo "archive plantumlsaas"
+git archive --format=tar HEAD plantumlsaas | tar -C dist -xf -
 cd -

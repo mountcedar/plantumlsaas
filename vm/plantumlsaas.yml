@@ -28,7 +28,7 @@
 - name: mkdir static directory
   file: path=/var/www/html/static state=directory
 
-- name: collectstatic in hmreport
+- name: collectstatic in plantumlsaas
   command: python manage.py collectstatic --noinput
     chdir={{ project_dir }}
 
