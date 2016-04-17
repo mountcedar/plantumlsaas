@@ -5,29 +5,10 @@
     - python-pip
     - libffi-dev
     - python-openssl
+    - python-pillow
     - memcached
     - default-jre
 
-
-# - name: check if rabbitmq exists
-#   stat: path=/etc/init.d/rabbitmq-server
-#   register: rabbitmq
-#
-# - name: install rabbitmq
-#   shell: curl -s https://packagecloud.io/install/repositories/rabbitmq/rabbitmq-server/script.deb.sh | bash
-#   when: not rabbitmq.stat.exists
-#
-# - name: apt-get install rabbitmq-server
-#   apt: name=rabbitmq-server state=latest
-#   when: not rabbitmq.stat.exists
-
-#
-# meaning of each packages follow:
-#   pytz, django-celery: for handling timezone
-#   celery: for creating blocker for django
-#   gitpython, pygitlab: for handling git repository holding the git server
-#   gdata, pyopenssl, oauth2client: for handling google spreadsheet holding user infomation
-#
 - name: pip install pytz
   pip: name={{ item }} state=latest
   with_items:

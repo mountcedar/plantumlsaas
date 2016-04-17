@@ -5,31 +5,36 @@ from django.shortcuts import render
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from django.shortcuts import render
-
 import os
-import urllib
-import urllib2
 import json
 import traceback
 import logging
+import subprocess
 
 import requests
+from PIL import Image
+
 from django.http import Http404
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 # from django.shortcuts import render
-from django.shortcuts import render_to_response
-from django.template import RequestContext
-from django.utils.http import urlencode
 from django.views.decorators.csrf import csrf_exempt
-from django.core.cache import cache
-from django.core import serializers
 
 @csrf_exempt
 def get(request):
     if request.method != "GET":
         raise Http404
     query = request.META['QUERY_STRING']
-
-    return HttpResponse(json.dumps({'str': query}), content_type='application/json')
+    cmd = 'java -jar /usr/local/lib/plantuml.jar'
+    p = subprocess.Popen(cmd, shell=True, stdin=subprocess.PIPE, tdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    p.wait()
+    p.stdin.write(query)
+    p.communicate()
+    try:
+    with open(valid_image, "rb") as f:
+        return HttpResponse(f.read(), content_type="image/png")
+    except IOError:
+        red = Image.new('RGBA', (1, 1), (255,0,0,0))
+        response = HttpResponse(content_type="image/jpeg")
+        red.save(response, "JPEG")
+        return response

@@ -47,4 +47,4 @@
 
     # ----- restart Apache -----
     - name: restart apache
-      command: service apache2 restart
+      service: name="apache2" state=restarted
