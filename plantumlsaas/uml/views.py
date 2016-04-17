@@ -22,21 +22,21 @@ from django.views.decorators.csrf import csrf_exempt
 
 @csrf_exempt
 def get(request):
-    if request.method != "GET":
-        raise Http404
-    query = request.META['QUERY_STRING']
-    cmd = 'java -jar /usr/local/lib/plantuml.jar'
-    p = subprocess.Popen(
-        cmd,
-        shell=True,
-        stdin=subprocess.PIPE,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE
-    )
-    p.wait()
-    p.stdin.write(query)
-    p.communicate()
     try:
+        if request.method != "GET":
+            raise Http404
+        query = request.META['QUERY_STRING']
+        cmd = 'java -jar /usr/local/lib/plantuml.jar'
+        p = subprocess.Popen(
+            cmd,
+            # shell=True,
+            stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE
+        )
+        p.wait()
+        p.stdin.write(query)
+        p.communicate()
         with open('image.png', "rb") as f:
             return HttpResponse(f.read(), content_type="image/png")
     except IOError:

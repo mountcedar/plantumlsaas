@@ -9,7 +9,7 @@
     - memcached
     - default-jre
 
-- name: pip install pytz
+- name: pip install necessary packages for django application
   pip: name={{ item }} state=latest
   with_items:
     - pytz
