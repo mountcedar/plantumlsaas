@@ -32,7 +32,7 @@ def get(request):
             # shell=True,
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE
+            # stderr=subprocess.PIPE
         )
         p.wait()
         p.stdin.write(query)
@@ -40,6 +40,11 @@ def get(request):
         with open('image.png', "rb") as f:
             return HttpResponse(f.read(), content_type="image/png")
     except IOError:
+        red = Image.new('RGBA', (1, 1), (255,0,0,0))
+        response = HttpResponse(content_type="image/jpeg")
+        red.save(response, "JPEG")
+        return response
+    except OSError:
         red = Image.new('RGBA', (1, 1), (255,0,0,0))
         response = HttpResponse(content_type="image/jpeg")
         red.save(response, "JPEG")
