@@ -31,8 +31,8 @@ def get(request):
     p.stdin.write(query)
     p.communicate()
     try:
-    with open('image.png', "rb") as f:
-        return HttpResponse(f.read(), content_type="image/png")
+        with open('image.png', "rb") as f:
+            return HttpResponse(f.read(), content_type="image/png")
     except IOError:
         red = Image.new('RGBA', (1, 1), (255,0,0,0))
         response = HttpResponse(content_type="image/jpeg")
