@@ -30,6 +30,6 @@ from django.core import serializers
 def get(request):
     if request.method != "GET":
         raise Http404
-    query = request.QUERY_STRING
+    query = request.META['QUERY_STRING']
 
     return HttpResponse(json.dumps({'str': query}), 'json/application')
