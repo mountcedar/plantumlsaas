@@ -32,9 +32,7 @@ def get(request):
             raise Http404
         query = request.META['QUERY_STRING']
 
-        uml = UML.objects.get_or_create(query=query)
-        uml.save()
-
+        uml, created = UML.objects.get_or_create(query=query)
         uml.image = os.path.join(STATIC_ROOT, uml.uuid + ".png")
         query_string = "@startuml {%s}" % uml.image + os.linesep
         query_string += query
@@ -61,4 +59,4 @@ def get(request):
     except OSError, ose:
         return HttpResponse(str(ose), content_type="text/plain")
     except Exception, e:
-        return HttpResponse(str(e), content_type="text/plain"   )
+        return HttpResponse(str(e), content_type="text/plain")
