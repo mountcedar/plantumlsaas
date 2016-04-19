@@ -33,7 +33,7 @@ def get(request):
         query = request.META['QUERY_STRING']
 
         uml, created = UML.objects.get_or_create(query=query)
-        uml.image = os.path.join(STATIC_ROOT, uml.uuid.hex + ".png")
+        x = os.path.join(STATIC_ROOT, uml.uuid.hex + ".png")
         query_string = "@startuml {%s}" % uml.image + os.linesep
         query_string += query
         query_string *= "@enduml"
@@ -55,8 +55,8 @@ def get(request):
             uml.save()
             return HttpResponse(f.read(), content_type="image/png")
     except IOError, ioe:
-        return HttpResponse(str(ioe), content_type="text/plain")
+        return HttpResponse(traceback.format_exc(), content_type="text/plain")
     except OSError, ose:
-        return HttpResponse(str(ose), content_type="text/plain")
+        return HttpResponse(traceback.format_exc(), content_type="text/plain")
     except Exception, e:
-        return HttpResponse(str(e), content_type="text/plain")
+        return HttpResponse(traceback.format_exc(), content_type="text/plain")
