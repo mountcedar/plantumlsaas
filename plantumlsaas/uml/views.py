@@ -36,7 +36,7 @@ def get(request):
         x = os.path.join(STATIC_ROOT, uml.uuid.hex + ".png")
         query_string = "@startuml {%s}" % uml.image + os.linesep
         query_string += query
-        query_string *= "@enduml"
+        query_string += "@enduml"
 
         cmd = 'java -jar /usr/local/lib/plantuml.jar'
         p = subprocess.Popen(
