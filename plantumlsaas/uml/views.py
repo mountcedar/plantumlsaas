@@ -44,11 +44,11 @@ def get(request):
             shell=True,
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
-            # stderr=subprocess.PIPE
+            stderr=subprocess.PIPE
         )
         # p.wait()
         p.stdin.write(query_string)
-        p.communicate()
+        out, err = p.communicate()
 
         with uml.image.open() as f:
             uml.image_url = os.path.join(STATIC_URL, uml.uuid.hex + ".png")
