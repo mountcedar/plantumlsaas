@@ -46,7 +46,7 @@ def get(request):
             stdout=subprocess.PIPE,
             # stderr=subprocess.PIPE
         )
-        p.wait()
+        # p.wait()
         p.stdin.write(query_string)
         p.communicate()
 
