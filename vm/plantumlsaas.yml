@@ -1,7 +1,7 @@
 # ----- get latest plantuml jar file -----
 - name: get latest plantuml
   get_url:
-    url="http://downloads.sourceforge.net/project/plantuml/plantuml.jar?r=http%3A%2F%2Ftweeeety.hateblo.jp%2Fentry%2F2014%2F10%2F24%2F173359&ts=1460892733&use_mirror=tenet"
+    url="http://downloads.sourceforge.net/project/plantuml/plantuml.jar?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fplantuml%2Ffiles%2Fplantuml.jar%2Fdownload%3Fuse_mirror%3Dautoselect&ts=1461069587&use_mirror=jaist"
     dest=/usr/local/lib/plantuml.jar
 
 # ----- get project by github svn feature -----

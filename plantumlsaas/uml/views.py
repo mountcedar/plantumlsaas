@@ -41,7 +41,7 @@ def get(request):
         cmd = 'java -jar /usr/local/lib/plantuml.jar'
         p = subprocess.Popen(
             cmd,
-            # shell=True,
+            shell=True,
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
             # stderr=subprocess.PIPE
