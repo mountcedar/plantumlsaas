@@ -55,8 +55,8 @@ def get(request):
             uml.save()
             return HttpResponse(f.read(), content_type="image/png")
     except IOError, ioe:
-        return HttpResponse(traceback.format_exc(), content_type="text/plain")
+        return HttpResponse(traceback.format_exc() + os.linesep + out + os.linesep + err + os.linesep, content_type="text/plain")
     except OSError, ose:
-        return HttpResponse(traceback.format_exc(), content_type="text/plain")
+        return HttpResponse(traceback.format_exc() + os.linesep + out + os.linesep + err + os.linesep, content_type="text/plain")
     except Exception, e:
-        return HttpResponse(traceback.format_exc(), content_type="text/plain")
+        return HttpResponse(traceback.format_exc() + os.linesep + out + os.linesep + err + os.linesep, content_type="text/plain")
