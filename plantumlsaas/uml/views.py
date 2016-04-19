@@ -38,7 +38,7 @@ def get(request):
         query_string += query
         query_string += "@enduml"
 
-        cmd = 'java -jar /usr/local/lib/plantuml.jar'
+        cmd = 'java -Djava.awt.headless=true -jar /usr/local/lib/plantuml.jar'
         p = subprocess.Popen(
             cmd,
             shell=True,
