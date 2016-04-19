@@ -50,7 +50,7 @@ def get(request):
         p.stdin.write(query_string)
         p.communicate()
 
-        with open(uml.image.filename, "rb") as f:
+        with uml.image.open() as f:
             uml.image_url = os.path.join(STATIC_URL, uml.uuid.hex + ".png")
             uml.save()
             return HttpResponse(f.read(), content_type="image/png")
