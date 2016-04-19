@@ -1,4 +1,7 @@
 # ----- get latest plantuml jar file -----
+- name: make directory
+  command: mkdir -p /javaw
+
 - name: get latest plantuml
   get_url:
     url="http://downloads.sourceforge.net/project/plantuml/plantuml.jar?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fplantuml%2Ffiles%2Fplantuml.jar%2Fdownload%3Fuse_mirror%3Dautoselect&ts=1461069587&use_mirror=jaist"
