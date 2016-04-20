@@ -39,7 +39,7 @@ def get(request):
         query_string += "@enduml"
 
         # cmd = 'java -Djava.util.prefs.systemRoot=/javaw -Djava.util.prefs.userRoot=/javaw -Djava.awt.headless=true -jar /usr/local/lib/plantuml.jar'
-        cmd = 'java -Djava.awt.headless=true -jar /usr/local/lib/plantuml.jar'
+        cmd = 'java -Djava.awt.headless=true -Djava.util.prefs.systemRoot=/javaw -jar /usr/local/lib/plantuml.jar'
         p = subprocess.Popen(
             cmd,
             shell=True,
