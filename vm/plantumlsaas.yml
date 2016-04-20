@@ -1,4 +1,10 @@
 # ----- get latest plantuml jar file -----
+- name: apt-get install necessary packages for django apps
+  apt: name={{ item }} state=latest
+  with_items:
+    - graphviz
+    - doxygen
+
 - name: make directory
   file: path=/javaw state=directory owner=root group=root mode=0777
 
