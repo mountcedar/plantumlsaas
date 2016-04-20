@@ -1,6 +1,6 @@
 # ----- get latest plantuml jar file -----
 - name: make directory
-  command: mkdir -p /javaw
+  file: path=/javaw state=directory owner=root group=root mode=0777
 
 - name: get latest plantuml
   get_url:
