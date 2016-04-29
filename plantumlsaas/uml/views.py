@@ -58,7 +58,7 @@ def get(request):
         # p.stdin.write(query_string)
         out, err = p.communicate()
 
-        os.remove(path)
+        # os.remove(path)
 
         with uml.image.open() as f:
             uml.image_url = os.path.join(STATIC_URL, uml.uuid.hex + ".png")
