@@ -35,35 +35,40 @@ def get(request):
         query = request.META['QUERY_STRING']
 
         uml, created = UML.objects.get_or_create(query=query)
-        uml.image = os.path.join(STATIC_ROOT, uml.uuid.hex + ".png")
-        query_string = "@startuml{%s}" % (uml.uuid.hex + ".png") + os.linesep
-        query_string += urllib.unquote(query) + os.linesep
-        query_string += "@enduml"
+        if not created:
+            uml.image = os.path.join(STATIC_ROOT, uml.uuid.hex + ".png")
+            query_string = "@startuml{%s}" % (uml.uuid.hex + ".png") + os.linesep
+            query_string += urllib.unquote(query) + os.linesep
+            query_string += "@enduml"
 
-        fd, path = tempfile.mkstemp()
-        os.close(fd)
-        with open(path, 'w') as fp:
-            fp.write(query_string)
+            fd, path = tempfile.mkstemp()
+            os.close(fd)
+            with open(path, 'w') as fp:
+                fp.write(query_string)
 
-        cmd = 'java -Djava.util.prefs.systemRoot=/javaw -Djava.awt.headless=true -jar /usr/local/lib/plantuml.jar '
-        p = subprocess.Popen(
-            cmd + path,
-            shell=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-        )
-        out, err = p.communicate()
-        os.remove(path)
-        os.rename(
-            os.path.join(os.path.dirname(path), uml.uuid.hex + ".png"),
-            os.path.join(STATIC_ROOT, uml.uuid.hex + ".png")
-        )
+            cmd = 'java -Djava.util.prefs.systemRoot=/javaw -Djava.awt.headless=true -jar /usr/local/lib/plantuml.jar '
+            p = subprocess.Popen(
+                cmd + path,
+                shell=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+            )
+            out, err = p.communicate()
+            if err:
+                return HttpResponse(out, state=500, content_type="text_plain")
+
+            os.remove(path)
+            os.rename(
+                os.path.join(os.path.dirname(path), uml.uuid.hex + ".png"),
+                os.path.join(STATIC_ROOT, uml.uuid.hex + ".png")
+            )
+
         with open(os.path.join(STATIC_ROOT, uml.uuid.hex + ".png"), 'rb') as fp:
             uml.image_url = os.path.join(STATIC_URL, uml.uuid.hex + ".png")
             uml.save()
             return HttpResponse(fp.read(), content_type="image/png")
     except:
         return HttpResponse(
-            traceback.format_exc() + os.linesep + out + os.linesep + err + os.linesep,
+            traceback.format_exc(),
             content_type="text/plain"
         )
