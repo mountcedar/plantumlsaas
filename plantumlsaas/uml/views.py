@@ -11,6 +11,7 @@ import traceback
 import logging
 import subprocess
 import tempfile
+import urllib
 
 import requests
 from PIL import Image
@@ -36,7 +37,7 @@ def get(request):
         uml, created = UML.objects.get_or_create(query=query)
         uml.image = os.path.join(STATIC_ROOT, uml.uuid.hex + ".png")
         query_string = "@startuml {%s}" % uml.image.name + os.linesep
-        query_string += query + os.linesep
+        query_string += urllib.unquote(query) + os.linesep
         query_string += "@enduml"
 
         fd, path = tempfile.mkstemp()
