@@ -38,18 +38,18 @@ def get(request):
         query_string += query
         query_string += "@enduml"
 
-        cmd = 'java -Djava.util.prefs.systemRoot=/javaw -Djava.util.prefs.userRoot=/javaw -Djava.awt.headless=true -jar /usr/local/lib/plantuml.jar'
+        cmd = 'java -Djava.util.prefs.systemRoot=/javaw -Djava.util.prefs.userRoot=/javaw -Djava.awt.headless=true -jar /usr/local/lib/plantuml.jar /home/vagrant/sample.pu'
         # cmd = 'java -Djava.awt.headless=true -Djava.util.prefs.systemRoot=/javaw -jar /usr/local/lib/plantuml.jar'
         p = subprocess.Popen(
             cmd,
             shell=True,
-            stdin=subprocess.PIPE,
+            # stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE
+            stderr=subprocess.PIPE,
         )
         # p.wait()
-        p.stdin.write(query_string)
-        out, err = p.communicate()
+        # p.stdin.write(query_string)
+        # out, err = p.communicate()
 
         with uml.image.open() as f:
             uml.image_url = os.path.join(STATIC_URL, uml.uuid.hex + ".png")
