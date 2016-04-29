@@ -37,7 +37,7 @@
 - name: mkdir static directory
   file:
     path=/var/www/html/static state=directory
-    owner=ww-data
+    owner=www-data
     group=www-data
     mode=0755
 
