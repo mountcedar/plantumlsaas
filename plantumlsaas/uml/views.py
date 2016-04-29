@@ -35,7 +35,7 @@ def get(request):
         query = request.META['QUERY_STRING']
 
         uml, created = UML.objects.get_or_create(query=query)
-        if not created:
+        if created:
             uml.image = os.path.join(STATIC_ROOT, uml.uuid.hex + ".png")
             query_string = "@startuml{%s}" % (uml.uuid.hex + ".png") + os.linesep
             query_string += urllib.unquote(query) + os.linesep
@@ -62,10 +62,10 @@ def get(request):
                 os.path.join(os.path.dirname(path), uml.uuid.hex + ".png"),
                 os.path.join(STATIC_ROOT, uml.uuid.hex + ".png")
             )
-
-        with open(os.path.join(STATIC_ROOT, uml.uuid.hex + ".png"), 'rb') as fp:
             uml.image_url = os.path.join(STATIC_URL, uml.uuid.hex + ".png")
             uml.save()
+
+        with open(os.path.join(STATIC_ROOT, uml.uuid.hex + ".png"), 'rb') as fp:
             return HttpResponse(fp.read(), content_type="image/png")
     except:
         return HttpResponse(
