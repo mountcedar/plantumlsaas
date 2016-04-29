@@ -61,7 +61,7 @@ def get(request):
         os.remove(path)
         os.rename(
             os.path.join(os.path.dirname(path), uml.uuid.hex + ".png"),
-            os.path.join(STATIC_URL, uml.uuid.hex + ".png")
+            os.path.join(STATIC_ROOT, uml.uuid.hex + ".png")
         )
         with uml.image.open() as f:
             uml.image_url = os.path.join(STATIC_URL, uml.uuid.hex + ".png")
