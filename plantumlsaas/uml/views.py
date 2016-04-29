@@ -36,7 +36,7 @@ def get(request):
 
         uml, created = UML.objects.get_or_create(query=query)
         uml.image = os.path.join(STATIC_ROOT, uml.uuid.hex + ".png")
-        query_string = "@startuml{%s}" % uml.uuid.hex + ".png" + os.linesep
+        query_string = "@startuml{%s}" % (uml.uuid.hex + ".png") + os.linesep
         query_string += urllib.unquote(query) + os.linesep
         query_string += "@enduml"
 
