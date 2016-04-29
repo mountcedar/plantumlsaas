@@ -32,10 +32,14 @@
 
 # ----- Add django wsgi settings -----
 - name: rmdir static directory
-  command: rm -rf /var/www/html/static owner=ww-data group=www-data mode=0755
+  command: rm -rf /var/www/html/static
 
 - name: mkdir static directory
-  file: path=/var/www/html/static state=directory
+  file:
+    path=/var/www/html/static state=directory
+    owner=ww-data
+    group=www-data
+    mode=0755
 
 - name: collectstatic in plantumlsaas
   command: python manage.py collectstatic --noinput
