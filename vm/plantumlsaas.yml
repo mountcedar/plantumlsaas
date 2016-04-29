@@ -32,7 +32,7 @@
 
 # ----- Add django wsgi settings -----
 - name: rmdir static directory
-  command: rm -rf /var/www/html/static
+  command: rm -rf /var/www/html/static owner=ww-data group=www-data mode=0755
 
 - name: mkdir static directory
   file: path=/var/www/html/static state=directory
