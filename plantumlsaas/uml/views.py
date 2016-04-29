@@ -66,6 +66,6 @@ def get(request):
             return HttpResponse(f.read(), content_type="image/png")
     except:
         return HttpResponse(
-            traceback.format_exc(),# + os.linesep + out + os.linesep + err + os.linesep,
+            traceback.format_exc() + os.linesep + out + os.linesep + err + os.linesep,
             content_type="text/plain"
         )
