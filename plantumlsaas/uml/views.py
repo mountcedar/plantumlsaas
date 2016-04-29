@@ -39,15 +39,15 @@ def get(request):
         query_string += query + os.linesep
         query_string += "@enduml"
 
-        temp = tempfile.mkstemp()
-        temp.write(query_string)
-        temp.close()
+        fd, path = tempfile.mkstemp()
+        fd.write(query_string)
+        fd.close()
 
         # cmd = 'java -Djava.util.prefs.systemRoot=/javaw -Djava.util.prefs.userRoot=/javaw -Djava.awt.headless=true -jar /usr/local/lib/plantuml.jar '
         # cmd = 'java -Djava.awt.headless=true -Djava.util.prefs.systemRoot=/javaw -jar /usr/local/lib/plantuml.jar'
         cmd = 'java -Djava.util.prefs.systemRoot=/javaw -Djava.awt.headless=true -jar /usr/local/lib/plantuml.jar '
         p = subprocess.Popen(
-            cmd + temp.name,
+            cmd + path,
             shell=True,
             # stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
