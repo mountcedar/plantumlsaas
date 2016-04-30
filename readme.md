@@ -1,6 +1,6 @@
 # はじめに
 
-このプロジェクトは、PlantUMLをSaaS経由で利用するためのウェブサービスを開発するプロジェクトです。
+このプロジェクトは、PlantUMLをSaaS経由で利用するためのウェブサービスを開発するプロジェクトです。できることは、[Gravizo](http://www.gravizo.com/)のサービスのPlantUML部分のみを抜き出したものです。
 基本的に、環境の運用は仮想マシン上で行い、このプロジェクトは仮想環境を立ち上げるソースコード、
 スクリプト一式を提供します。
 
@@ -19,10 +19,10 @@ http://<your host/your domain>/services/uml/get?<plantuml expression>
 上記を用いることで、markdownなどからplantumlのサービスにアクセスすることができます。
 ```
 ![uml example](http://www.wandercode.jp/services/uml/get?
-  hoge->geho: hello world
+  hoge->geho: hello world;
   )
 ```
 
 ![uml example](http://www.wandercode.jp/services/uml/get?
-  hoge->geho: hello world
+  hoge->geho: hello world;
   )

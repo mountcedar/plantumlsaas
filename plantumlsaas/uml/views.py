@@ -38,7 +38,7 @@ def get(request):
         if created:
             uml.image = os.path.join(STATIC_ROOT, uml.uuid.hex + ".png")
             query_string = "@startuml{%s}" % (uml.uuid.hex + ".png") + os.linesep
-            query_string += urllib.unquote(query) + os.linesep
+            query_string += urllib.unquote(query).replace(';', os.linesep) + os.linesep
             query_string += "@enduml"
 
             fd, path = tempfile.mkstemp()
