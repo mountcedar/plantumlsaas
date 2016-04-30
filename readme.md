@@ -19,10 +19,12 @@ http://<your host/your domain>/services/uml/get?<plantuml expression>
 上記を用いることで、markdownなどからplantumlのサービスにアクセスすることができます。
 ```
 ![uml example](http://www.wandercode.jp/services/uml/get?
-  hoge->geho: hello world;
+  hoge->geho:hello world;
+  hoge<-geho:world is not enough;
   )
 ```
 
 ![uml example](http://www.wandercode.jp/services/uml/get?
-  hoge->geho: hello world;
+  hoge->geho:hello world;
+  hoge<-geho:world is not enough;
   )
